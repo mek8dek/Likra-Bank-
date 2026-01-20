@@ -22,7 +22,7 @@ function carregarJogador() {
 // função para obter data/hora atual
 function agora() {
   const d = new Date();
-  return d.toLocaleString();
+  return d.toLocaleString(); // formato local
 }
 
 // atualizar tela + salvar dados
