@@ -1,7 +1,14 @@
-let saldo = 100;
+let saldo = localStorage.getItem("saldoLikra");
+
+if (saldo === null) {
+  saldo = 100;
+} else {
+  saldo = parseInt(saldo);
+}
 
 function atualizarSaldo() {
   document.getElementById("saldo").innerText = saldo + " Likra K$";
+  localStorage.setItem("saldoLikra", saldo);
 }
 
 function ganhar() {
@@ -17,3 +24,5 @@ function gastar() {
     alert("Saldo insuficiente");
   }
 }
+
+window.onload = atualizarSaldo;
