@@ -98,3 +98,11 @@ button.trocar {
 #listaJogadores button:hover {
   opacity: 0.9;
   }
+button.comprar {
+  background: #10b981; /* verde */
+  color: #fff;
+}
+button.vender {
+  background: #ef4444; /* vermelho */
+  color: #fff;
+  }
