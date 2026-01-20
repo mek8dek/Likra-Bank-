@@ -124,7 +124,57 @@ function oscilarMoeda() {
 
 // oscilar a cada 5 segundos
 setInterval(oscilarMoeda, 5000);
+// saldo em reais (ou unidade fictícia)
+let saldoReais = 1000; // cada jogador pode ter R$ para comprar Likra
 
+// mostrar saldo em reais
+function atualizarReais() {
+  document.getElementById("saldoReais").innerText = `R$ ${saldoReais.toFixed(2)}`;
+}
+
+// comprar Likra
+function comprarLikra() {
+  const valorCompraStr = prompt("Quantos R$ deseja gastar para comprar Likra?");
+  const valorCompra = parseFloat(valorCompraStr);
+  if (isNaN(valorCompra) || valorCompra <= 0) {
+    alert("Valor inválido");
+    return;
+  }
+  if (valorCompra > saldoReais) {
+    alert("Saldo insuficiente em R$");
+    return;
+  }
+
+  const quantidadeLikra = valorCompra / valorLikra;
+  saldo += quantidadeLikra;
+  saldoReais -= valorCompra;
+
+  historico.unshift({ texto: `Comprou ${quantidadeLikra.toFixed(2)} Likra por R$ ${valorCompra}`, hora: agora() });
+  atualizarTudo();
+  atualizarReais();
+}
+
+// vender Likra
+function venderLikra() {
+  const quantidadeStr = prompt("Quantas Likra deseja vender?");
+  const quantidade = parseFloat(quantidadeStr);
+  if (isNaN(quantidade) || quantidade <= 0) {
+    alert("Quantidade inválida");
+    return;
+  }
+  if (quantidade > saldo) {
+    alert("Saldo de Likra insuficiente");
+    return;
+  }
+
+  const valorVenda = quantidade * valorLikra;
+  saldo -= quantidade;
+  saldoReais += valorVenda;
+
+  historico.unshift({ texto: `Vendeu ${quantidade.toFixed(2)} Likra por R$ ${valorVenda.toFixed(2)}`, hora: agora() });
+  atualizarTudo();
+  atualizarReais();
+}
 document.addEventListener("DOMContentLoaded", () => {
   carregarJogador();
   atualizarTudo();
