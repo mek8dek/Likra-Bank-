@@ -3,20 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <title>Likra Games Bank</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Likra Games Bank</h1>
+<div class="app">
+  <h1>Likra Bank</h1>
 
-<p>Moeda oficial: <strong>Likra K$</strong></p>
+  <div class="card">
+    <p>Moeda</p>
+    <p class="saldo" id="saldo">100 Likra K$</p>
+  </div>
 
-<h2>Saldo</h2>
-<p id="saldo">100 Likra K$</p>
-
-<button onclick="ganhar()">Ganhar 10 Likra K$</button>
-<button onclick="gastar()">Gastar 5 Likra K$</button>
+  <button class="ganhar" onclick="ganhar()">Ganhar 10 Likra K$</button>
+  <button class="gastar" onclick="gastar()">Gastar 5 Likra K$</button>
+</div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
