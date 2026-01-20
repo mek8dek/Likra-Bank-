@@ -3,8 +3,10 @@
 // -----------------------
 let jogador = "";
 let saldoLikra = 100;
-let historico = [];
 let saldoReais = 1000;
+let saldoSAD = 0;
+let saldoDAF = 0;
+let historico = [];
 
 // lista de jogadores
 function carregarJogador(nome) {
@@ -22,8 +24,10 @@ function carregarJogador(nome) {
 
   // carregar saldo e histórico
   saldoLikra = parseFloat(localStorage.getItem("saldo_" + jogador)) || 100;
-  historico = JSON.parse(localStorage.getItem("historico_" + jogador)) || [];
   saldoReais = parseFloat(localStorage.getItem("saldoReais_" + jogador)) || 1000;
+  saldoSAD = parseFloat(localStorage.getItem("saldoSAD_" + jogador)) || 0;
+  saldoDAF = parseFloat(localStorage.getItem("saldoDAF_" + jogador)) || 0;
+  historico = JSON.parse(localStorage.getItem("historico_" + jogador)) || [];
 }
 
 // data/hora atual
@@ -48,8 +52,10 @@ function atualizarTudo() {
 
   // salvar dados
   localStorage.setItem("saldo_" + jogador, saldoLikra);
-  localStorage.setItem("historico_" + jogador, JSON.stringify(historico));
   localStorage.setItem("saldoReais_" + jogador, saldoReais);
+  localStorage.setItem("saldoSAD_" + jogador, saldoSAD);
+  localStorage.setItem("saldoDAF_" + jogador, saldoDAF);
+  localStorage.setItem("historico_" + jogador, JSON.stringify(historico));
 
   atualizarListaJogadores();
 }
@@ -116,30 +122,47 @@ function atualizarListaJogadores() {
 // -----------------------
 // BOLSA DE MOEDAS
 // -----------------------
-let valorLikra = 3.44;
+let valorLikraBolsa = 3.44;
 let valorSAD = 2.34;
 let valorDAF = 7.89;
+
+// armazenar valor anterior para calcular % variação
+let prevLikra = valorLikraBolsa;
+let prevSAD = valorSAD;
+let prevDAF = valorDAF;
+
 const taxa = 0.025; // 2,5%
 
-// oscilar moedas
+// função para oscilar moedas (±5%) e calcular variação %
 function oscilarMoeda() {
   function oscilar(valor) {
-    const variacao = (Math.random() * 0.1) - 0.05;
+    const variacao = (Math.random() * 0.1) - 0.05; // -5% a +5%
     return parseFloat((valor * (1 + variacao)).toFixed(2));
   }
 
-  valorLikra = oscilar(valorLikra);
-  valorSAD = oscilar(valorSAD);
-  valorDAF = oscilar(valorDAF);
+  // calcular novas oscilações
+  const novoLikra = oscilar(valorLikraBolsa);
+  const novoSAD = oscilar(valorSAD);
+  const novoDAF = oscilar(valorDAF);
 
-  atualizarBolsa();
-}
+  // calcular porcentagem de variação
+  const percLikra = ((novoLikra - prevLikra) / prevLikra * 100).toFixed(2);
+  const percSAD = ((novoSAD - prevSAD) / prevSAD * 100).toFixed(2);
+  const percDAF = ((novoDAF - prevDAF) / prevDAF * 100).toFixed(2);
 
-// atualizar bolsa na tela
-function atualizarBolsa() {
-  document.getElementById("valorLikra").innerText = `Likra K$: R$ ${valorLikra.toFixed(2)}`;
-  document.getElementById("valorSAD").innerText = `SAD$: R$ ${valorSAD.toFixed(2)}`;
-  document.getElementById("valorDAF").innerText = `DAF¥: R$ ${valorDAF.toFixed(2)}`;
+  // atualizar cores: verde = alta, vermelho = queda
+  document.getElementById("valorLikra").innerHTML = `Likra K$: R$ ${novoLikra} <span style="color:${percLikra>=0?'green':'red'}">(${percLikra>=0?'+':''}${percLikra}%)</span>`;
+  document.getElementById("valorSAD").innerHTML = `SAD$: R$ ${novoSAD} <span style="color:${percSAD>=0?'green':'red'}">(${percSAD>=0?'+':''}${percSAD}%)</span>`;
+  document.getElementById("valorDAF").innerHTML = `DAF¥: R$ ${novoDAF} <span style="color:${percDAF>=0?'green':'red'}">(${percDAF>=0?'+':''}${percDAF}%)</span>`;
+
+  // salvar valores para próxima variação
+  prevLikra = valorLikraBolsa;
+  prevSAD = valorSAD;
+  prevDAF = valorDAF;
+
+  valorLikraBolsa = novoLikra;
+  valorSAD = novoSAD;
+  valorDAF = novoDAF;
 }
 
 // comprar moeda
@@ -153,15 +176,13 @@ function comprarMoeda(tipo) {
   const valorLiquido = valor - taxaOper;
   let quantidade = 0;
 
-  if (tipo === "Likra") { quantidade = valorLiquido / valorLikra; saldoLikra += quantidade; }
+  if (tipo === "Likra") { quantidade = valorLiquido / valorLikraBolsa; saldoLikra += quantidade; }
   else if (tipo === "SAD") { quantidade = valorLiquido / valorSAD; saldoSAD += quantidade; }
   else if (tipo === "DAF") { quantidade = valorLiquido / valorDAF; saldoDAF += quantidade; }
 
   saldoReais -= valor;
   alert(`Comprou ${quantidade.toFixed(2)} ${tipo} (taxa R$ ${taxaOper.toFixed(2)})`);
   atualizarTudo();
-  atualizarBolsa();
-  atualizarReais();
 }
 
 // vender moeda
@@ -172,7 +193,7 @@ function venderMoeda(tipo) {
 
   let saldoMoeda = 0;
   let valorAtual = 0;
-  if (tipo === "Likra") { saldoMoeda = saldoLikra; valorAtual = valorLikra; }
+  if (tipo === "Likra") { saldoMoeda = saldoLikra; valorAtual = valorLikraBolsa; }
   else if (tipo === "SAD") { saldoMoeda = saldoSAD; valorAtual = valorSAD; }
   else if (tipo === "DAF") { saldoMoeda = saldoDAF; valorAtual = valorDAF; }
 
@@ -188,10 +209,7 @@ function venderMoeda(tipo) {
 
   saldoReais += valorLiquido;
   alert(`Vendeu ${qtd.toFixed(2)} ${tipo} por R$ ${valorLiquido.toFixed(2)} (taxa R$ ${taxaOper.toFixed(2)})`);
-
   atualizarTudo();
-  atualizarBolsa();
-  atualizarReais();
 }
 
 // -----------------------
@@ -200,7 +218,6 @@ function venderMoeda(tipo) {
 document.addEventListener("DOMContentLoaded", () => {
   carregarJogador();
   atualizarTudo();
-  atualizarBolsa();
-  atualizarReais();
-  setInterval(oscilarMoeda, 5000);
+  oscilarMoeda(); // primeira atualização
+  setInterval(oscilarMoeda, 5000); // oscila a cada 5s
 });
