@@ -1,4 +1,4 @@
-let jogador = "";
+  let jogador = "";
 let saldo = 100;
 let historico = [];
 
@@ -8,15 +8,17 @@ function carregarJogador(nome) {
   if (!jogador) {
     jogador = prompt("Digite seu nome:");
     if (!jogador) jogador = "Jogador";
-    localStorage.setItem("jogadorLikra", jogador);
   }
+  localStorage.setItem("jogadorLikra", jogador);
 
-  // carregar saldo e histórico do jogador
-  const saldoSalvo = localStorage.getItem("saldo_" + jogador);
-  saldo = saldoSalvo ? parseInt(saldoSalvo) : 100;
+  // adicionar jogador na lista global
+  let listaJogadores = JSON.parse(localStorage.getItem("listaJogadores")) || [];
+  if (!listaJogadores.includes(jogador)) listaJogadores.push(jogador);
+  localStorage.setItem("listaJogadores", JSON.stringify(listaJogadores));
 
-  const historicoSalvo = localStorage.getItem("historico_" + jogador);
-  historico = historicoSalvo ? JSON.parse(historicoSalvo) : [];
+  // carregar saldo e histórico
+  saldo = parseInt(localStorage.getItem("saldo_" + jogador)) || 100;
+  historico = JSON.parse(localStorage.getItem("historico_" + jogador)) || [];
 }
 
 // data/hora atual
@@ -38,12 +40,14 @@ function atualizarTudo() {
     lista.appendChild(li);
   });
 
+  // salvar dados do jogador
   localStorage.setItem("saldo_" + jogador, saldo);
   localStorage.setItem("historico_" + jogador, JSON.stringify(historico));
-  localStorage.setItem("jogadorLikra", jogador);
+
+  // atualizar lista de jogadores na tela
+  atualizarListaJogadores();
 }
 
-// funções básicas
 function ganhar() {
   saldo += 10;
   historico.unshift({ texto: "Ganhou 10 Likra K$", hora: agora() });
@@ -60,7 +64,6 @@ function gastar() {
   }
 }
 
-// transferir para outro jogador
 function transferir() {
   const destinatario = prompt("Digite o nome do jogador que vai receber:");
   if (!destinatario) return;
@@ -77,16 +80,11 @@ function transferir() {
     return;
   }
 
-  // subtrai do remetente
   saldo -= valor;
   historico.unshift({ texto: `Transferiu ${valor} Likra K$ para ${destinatario}`, hora: agora() });
 
-  // adiciona ao destinatário
-  let saldoDest = localStorage.getItem("saldo_" + destinatario);
-  saldoDest = saldoDest ? parseInt(saldoDest) : 0;
-
-  let histDest = localStorage.getItem("historico_" + destinatario);
-  histDest = histDest ? JSON.parse(histDest) : [];
+  let saldoDest = parseInt(localStorage.getItem("saldo_" + destinatario)) || 0;
+  let histDest = JSON.parse(localStorage.getItem("historico_" + destinatario)) || [];
 
   histDest.unshift({ texto: `Recebeu ${valor} Likra K$ de ${jogador}`, hora: agora() });
 
@@ -96,12 +94,22 @@ function transferir() {
   atualizarTudo();
 }
 
-// trocar de conta
-function trocarConta() {
-  const novoNome = prompt("Digite o nome da conta que deseja acessar:");
-  if (!novoNome) return;
-  carregarJogador(novoNome);
-  atualizarTudo();
+// atualizar lista de jogadores na tela
+function atualizarListaJogadores() {
+  const divLista = document.getElementById("listaJogadores");
+  divLista.innerHTML = "";
+
+  const lista = JSON.parse(localStorage.getItem("listaJogadores")) || [];
+  lista.forEach(nome => {
+    const btn = document.createElement("button");
+    btn.innerText = nome;
+    btn.className = "trocar";
+    btn.onclick = () => {
+      carregarJogador(nome);
+      atualizarTudo();
+    };
+    divLista.appendChild(btn);
+  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
