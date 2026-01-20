@@ -111,6 +111,19 @@ function atualizarListaJogadores() {
     divLista.appendChild(btn);
   });
 }
+// valor base da moeda em R$
+let valorLikra = 3.44; 
+
+// função para simular variação (±5%)
+function oscilarMoeda() {
+  const variacao = (Math.random() * 0.1) - 0.05; // -5% a +5%
+  valorLikra = parseFloat((valorLikra * (1 + variacao)).toFixed(2));
+
+  document.getElementById("valorLikra").innerText = `Valor da Likra: R$ ${valorLikra}`;
+}
+
+// oscilar a cada 5 segundos
+setInterval(oscilarMoeda, 5000);
 
 document.addEventListener("DOMContentLoaded", () => {
   carregarJogador();
