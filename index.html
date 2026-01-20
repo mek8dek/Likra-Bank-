@@ -13,7 +13,16 @@
 <h2>Saldo</h2>
 <p id="saldo">100 Likra K$</p>
 
-<p>Status: funcionando ✅</p>
+<button onclick="ganhar()">Ganhar 10 Likra K$</button>
+
+<script>
+  let saldo = 100;
+
+  function ganhar() {
+    saldo = saldo + 10;
+    document.getElementById("saldo").innerText = saldo + " Likra K$";
+  }
+</script>
 
 </body>
 </html>
