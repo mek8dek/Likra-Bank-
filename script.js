@@ -10,6 +10,12 @@ if (localStorage.getItem("historicoLikra")) {
   historico = JSON.parse(localStorage.getItem("historicoLikra"));
 }
 
+// função para obter data/hora atual
+function agora() {
+  const d = new Date();
+  return d.toLocaleString(); // formato local
+}
+
 // atualizar tela + salvar
 function atualizarTudo() {
   document.getElementById("saldo").innerText = saldo + " Likra K$";
@@ -19,7 +25,7 @@ function atualizarTudo() {
 
   historico.forEach(item => {
     const li = document.createElement("li");
-    li.innerText = item;
+    li.innerText = `[${item.hora}] ${item.texto}`;
     lista.appendChild(li);
   });
 
@@ -29,14 +35,14 @@ function atualizarTudo() {
 
 function ganhar() {
   saldo += 10;
-  historico.unshift("➕ Ganhou 10 Likra K$");
+  historico.unshift({ texto: "Ganhou 10 Likra K$", hora: agora() });
   atualizarTudo();
 }
 
 function gastar() {
   if (saldo >= 5) {
     saldo -= 5;
-    historico.unshift("➖ Gastou 5 Likra K$");
+    historico.unshift({ texto: "Gastou 5 Likra K$", hora: agora() });
     atualizarTudo();
   } else {
     alert("Saldo insuficiente");
