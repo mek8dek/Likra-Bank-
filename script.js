@@ -2,7 +2,7 @@ let jogador = "";
 let saldo = 100;
 let historico = [];
 
-// função para carregar jogador
+// carregar jogador
 function carregarJogador() {
   jogador = localStorage.getItem("jogadorLikra");
   if (!jogador) {
@@ -11,7 +11,6 @@ function carregarJogador() {
     localStorage.setItem("jogadorLikra", jogador);
   }
 
-  // carregar saldo e histórico do jogador
   const saldoSalvo = localStorage.getItem("saldo_" + jogador);
   if (saldoSalvo !== null) saldo = parseInt(saldoSalvo);
 
@@ -19,10 +18,10 @@ function carregarJogador() {
   if (historicoSalvo !== null) historico = JSON.parse(historicoSalvo);
 }
 
-// função para obter data/hora atual
+// data/hora atual
 function agora() {
   const d = new Date();
-  return d.toLocaleString(); // formato local
+  return d.toLocaleString();
 }
 
 // atualizar tela + salvar dados
@@ -56,6 +55,42 @@ function gastar() {
   } else {
     alert("Saldo insuficiente");
   }
+}
+
+// nova função: transferir
+function transferir() {
+  const destinatario = prompt("Digite o nome do jogador que vai receber:");
+  if (!destinatario) return;
+
+  const valorStr = prompt("Quanto deseja transferir?");
+  const valor = parseInt(valorStr);
+  if (isNaN(valor) || valor <= 0) {
+    alert("Valor inválido");
+    return;
+  }
+
+  if (saldo < valor) {
+    alert("Saldo insuficiente para transferir");
+    return;
+  }
+
+  // subtrai do remetente
+  saldo -= valor;
+  historico.unshift({ texto: `Transferiu ${valor} Likra K$ para ${destinatario}`, hora: agora() });
+
+  // adiciona ao destinatário
+  let saldoDest = localStorage.getItem("saldo_" + destinatario);
+  saldoDest = saldoDest ? parseInt(saldoDest) : 0;
+
+  let histDest = localStorage.getItem("historico_" + destinatario);
+  histDest = histDest ? JSON.parse(histDest) : [];
+
+  histDest.unshift({ texto: `Recebeu ${valor} Likra K$ de ${jogador}`, hora: agora() });
+
+  localStorage.setItem("saldo_" + destinatario, saldoDest + valor);
+  localStorage.setItem("historico_" + destinatario, JSON.stringify(histDest));
+
+  atualizarTudo();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
