@@ -85,3 +85,16 @@ button.trocar {
   background: #8b5cf6; /* roxo */
   color: #fff;
 }
+#listaJogadores button {
+  background: #8b5cf6;
+  color: #fff;
+  margin: 4px 2px;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#listaJogadores button:hover {
+  opacity: 0.9;
+  }
