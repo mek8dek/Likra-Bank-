@@ -81,3 +81,7 @@ button.transferir {
   background: #f59e0b; /* laranja */
   color: #3b1e00;
     }
+button.trocar {
+  background: #8b5cf6; /* roxo */
+  color: #fff;
+}
