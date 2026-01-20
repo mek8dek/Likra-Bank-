@@ -30,13 +30,16 @@
     <ul id="historico"></ul>
 
     <!-- FUNDO DE EMPRÉSTIMOS -->
-    <div class="card">
-      <h3>Fundo de Empréstimos</h3>
-      <p>Disponível: <strong id="fundoEmprestimo">74.000.000 Likra K$</strong></p>
-      <button onclick="pegarEmprestimo()">Pegar Empréstimo</button>
-    </div>
-  </div>
-
+<div class="card">
+  <h3>Fundo de Empréstimos</h3>
+  <p id="fundoEmprestimo">74.000.000 Likra K$</p>
+  <button onclick="pegarEmprestimo()">Pegar Empréstimo</button>
+  <button onclick="pagarEmprestimo()">Pagar Empréstimo</button>
+  
+  <!-- Botão para acessar a página de empréstimos -->
+  <button onclick="window.location.href='emprestimos.html'">Área Empréstimos</button>
+</div>
+    
   <!-- BOLSA -->
   <div class="card bolsa">
     <h3>Bolsa de Moedas</h3>
