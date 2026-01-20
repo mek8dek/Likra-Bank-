@@ -1,21 +1,47 @@
-const cacheName = "likra-app-v1";
-const arquivos = [
-  "./",
-  "./index.html",
-  "./script.js",
-  "./style.css",
-  "./manifest.json"
+const CACHE_NAME = 'likra-app-cache-v1';
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/emprestimos.html',
+  '/fundoSoberano.html',
+  '/style.css',
+  '/script.js'
 ];
 
-self.addEventListener("install", event => {
+// INSTALAÇÃO DO SERVICE WORKER
+self.addEventListener('install', event => {
+  console.log('[ServiceWorker] Instalando...');
   event.waitUntil(
-    caches.open(cacheName).then(cache => cache.addAll(arquivos))
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('[ServiceWorker] Cache adicionado');
+        return cache.addAll(urlsToCache);
+      })
   );
 });
 
-self.addEventListener("fetch", event => {
+// ATIVAÇÃO DO SERVICE WORKER
+self.addEventListener('activate', event => {
+  console.log('[ServiceWorker] Ativado');
+  event.waitUntil(
+    caches.keys().then(keyList => {
+      return Promise.all(
+        keyList.map(key => {
+          if(key !== CACHE_NAME){
+            console.log('[ServiceWorker] Removendo cache antigo', key);
+            return caches.delete(key);
+          }
+        })
+      );
+    })
+  );
+});
+
+// INTERCEPTA REQUISIÇÕES
+self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
+      // Se tiver no cache, retorna do cache, senão faz fetch
       return response || fetch(event.request);
     })
   );
