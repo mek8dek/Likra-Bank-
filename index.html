@@ -1,17 +1,105 @@
-<div class="card bolsa">
-  <h3>Bolsa de Moedas</h3>
-  <p id="valorLikra">Likra K$: R$ 3.44 (0%)</p>
-  <p id="valorSAD">SAD$: R$ 2.34 (0%)</p>
-  <p id="valorDAF">DAF¥: R$ 7.89 (0%)</p>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Banco e Bolsa de Moedas</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 0;
+    }
 
-  <p id="saldoReais">R$ 1000.00</p>
+    .container {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      padding: 20px;
+    }
 
-  <button onclick="comprarMoeda('Likra')">Comprar Likra</button>
-  <button onclick="venderMoeda('Likra')">Vender Likra</button>
+    .app, .bolsa {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      padding: 20px;
+      width: 45%;
+    }
 
-  <button onclick="comprarMoeda('SAD')">Comprar SAD$</button>
-  <button onclick="venderMoeda('SAD')">Vender SAD$</button>
+    h3 {
+      margin-top: 10px;
+    }
 
-  <button onclick="comprarMoeda('DAF')">Comprar DAF¥</button>
-  <button onclick="venderMoeda('DAF')">Vender DAF¥</button>
+    .card p {
+      margin: 8px 0;
+    }
+
+    button {
+      margin: 5px 3px 5px 0;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    #historico {
+      max-height: 200px;
+      overflow-y: auto;
+      padding-left: 15px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- BANCO -->
+  <div class="app">
+    <p>Bem-vindo, <strong id="nomeJogador"></strong>!</p>
+
+    <div class="card">
+      <p>Saldo Likra</p>
+      <p class="saldo" id="saldo">100 Likra K$</p>
+    </div>
+
+    <button onclick="ganhar()">Ganhar 10 Likra K$</button>
+    <button onclick="gastar()">Gastar 5 Likra K$</button>
+    <button onclick="transferir()">Transferir Likra</button>
+
+    <h3>Trocar de Conta</h3>
+    <div id="listaJogadores"></div>
+
+    <h3>Histórico</h3>
+    <ul id="historico"></ul>
+  </div>
+
+  <!-- BOLSA -->
+  <div class="card bolsa">
+    <h3>Bolsa de Moedas</h3>
+    <p id="valorLikra">Likra K$: R$ 3.44 (0%)</p>
+    <p id="valorSAD">SAD$: R$ 2.34 (0%)</p>
+    <p id="valorDAF">DAF¥: R$ 7.89 (0%)</p>
+
+    <p id="saldoReais">R$ 1000.00</p>
+
+    <button onclick="comprarMoeda('Likra')">Comprar Likra</button>
+    <button onclick="venderMoeda('Likra')">Vender Likra</button>
+
+    <button onclick="comprarMoeda('SAD')">Comprar SAD$</button>
+    <button onclick="venderMoeda('SAD')">Vender SAD$</button>
+
+    <button onclick="comprarMoeda('DAF')">Comprar DAF¥</button>
+    <button onclick="venderMoeda('DAF')">Vender DAF¥</button>
+  </div>
 </div>
+
+<script src="script.js"></script>
+</body>
+        </html>
