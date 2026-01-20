@@ -2,40 +2,52 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Likra Games Bank</title>
+  <title>Banco e Bolsa de Moedas</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="app">
-  <!-- Boas-vindas com nome do jogador -->
-  <p>Bem-vindo, <strong id="nomeJogador"></strong>!</p>
+<div class="container">
+  <!-- Banco à esquerda -->
+  <div class="app">
+    <p>Bem-vindo, <strong id="nomeJogador"></strong>!</p>
 
-  <!-- Cartão de saldo -->
-  <div class="card">
-    <p>Saldo</p>
-    <p class="saldo" id="saldo">100 Likra K$</p>
-    <p id="valorLikra">Valor da Likra: R$ 3.44</p>
-    <p id="saldoReais">R$ 1000.00</p>
+    <div class="card">
+      <p>Saldo Likra</p>
+      <p class="saldo" id="saldo">100 Likra K$</p>
+    </div>
 
-<button class="comprar" onclick="comprarLikra()">Comprar Likra</button>
-<button class="vender" onclick="venderLikra()">Vender Likra</button>
+    <button class="ganhar" onclick="ganhar()">Ganhar 10 Likra K$</button>
+    <button class="gastar" onclick="gastar()">Gastar 5 Likra K$</button>
+    <button class="transferir" onclick="transferir()">Transferir Likra</button>
+
+    <h3>Trocar de Conta</h3>
+    <div id="listaJogadores"></div>
+
+    <h3>Histórico</h3>
+    <ul id="historico"></ul>
   </div>
 
-  <!-- Botões de ação -->
-  <button class="ganhar" onclick="ganhar()">Ganhar 10 Likra K$</button>
-  <button class="gastar" onclick="gastar()">Gastar 5 Likra K$</button>
-  <button class="transferir" onclick="transferir()">Transferir Likra</button>
+  <!-- Bolsa à direita -->
+  <div class="card bolsa">
+    <h3>Bolsa de Moedas</h3>
+    <p id="valorLikra">Likra K$: R$ 3.44</p>
+    <p id="valorSAD">SAD$: R$ 2.34</p>
+    <p id="valorDAF">DAF¥: R$ 7.89</p>
 
-  <!-- Lista de jogadores para troca rápida -->
-  <h3>Trocar de Conta</h3>
-  <div id="listaJogadores"></div>
+    <p id="saldoReais">R$ 1000.00</p>
 
-  <!-- Histórico -->
-  <h3>Histórico</h3>
-  <ul id="historico"></ul>
+    <button onclick="comprarMoeda('Likra')">Comprar Likra</button>
+    <button onclick="venderMoeda('Likra')">Vender Likra</button>
+
+    <button onclick="comprarMoeda('SAD')">Comprar SAD$</button>
+    <button onclick="venderMoeda('SAD')">Vender SAD$</button>
+
+    <button onclick="comprarMoeda('DAF')">Comprar DAF¥</button>
+    <button onclick="venderMoeda('DAF')">Vender DAF¥</button>
+  </div>
 </div>
 
 <script src="script.js"></script>
 </body>
-</html>
+      </html>
