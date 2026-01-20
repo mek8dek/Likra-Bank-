@@ -55,6 +55,10 @@
       overflow-y: auto;
       padding-left: 15px;
     }
+
+    .ganho {
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -83,9 +87,15 @@
   <!-- BOLSA -->
   <div class="card bolsa">
     <h3>Bolsa de Moedas</h3>
+
     <p id="valorLikra">Likra K$: R$ 3.44 (0%)</p>
+    <p>Saldo Likra: <span id="saldoLikraBolsa">0</span> | Valor total: R$ <span id="totalLikra">0</span> | <span id="lucroLikra" class="ganho">0</span></p>
+
     <p id="valorSAD">SAD$: R$ 2.34 (0%)</p>
+    <p>Saldo SAD$: <span id="saldoSADBolsa">0</span> | Valor total: R$ <span id="totalSAD">0</span> | <span id="lucroSAD" class="ganho">0</span></p>
+
     <p id="valorDAF">DAF¥: R$ 7.89 (0%)</p>
+    <p>Saldo DAF¥: <span id="saldoDAFBolsa">0</span> | Valor total: R$ <span id="totalDAF">0</span> | <span id="lucroDAF" class="ganho">0</span></p>
 
     <p id="saldoReais">R$ 1000.00</p>
 
