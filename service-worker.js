@@ -1,4 +1,4 @@
-const CACHE_NAME = 'likra-app-cache-v1';
+const CACHE_NAME = 'likra-app-cache-v2'; // altere de v1 para v2
 const urlsToCache = [
   '/',
   '/index.html',
