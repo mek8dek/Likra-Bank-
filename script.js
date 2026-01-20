@@ -1,28 +1,29 @@
-let saldo = localStorage.getItem("saldoLikra");
+let saldo = 100;
 
-if (saldo === null) {
-  saldo = 100;
-} else {
-  saldo = parseInt(saldo);
+// carregar saldo salvo
+if (localStorage.getItem("saldoLikra") !== null) {
+  saldo = parseInt(localStorage.getItem("saldoLikra"));
 }
 
+// atualizar tela + salvar
 function atualizarSaldo() {
   document.getElementById("saldo").innerText = saldo + " Likra K$";
   localStorage.setItem("saldoLikra", saldo);
 }
 
 function ganhar() {
-  saldo = saldo + 10;
+  saldo += 10;
   atualizarSaldo();
 }
 
 function gastar() {
   if (saldo >= 5) {
-    saldo = saldo - 5;
+    saldo -= 5;
     atualizarSaldo();
   } else {
     alert("Saldo insuficiente");
   }
 }
 
-window.onload = atualizarSaldo;
+// garante que a tela carregue com o valor salvo
+document.addEventListener("DOMContentLoaded", atualizarSaldo);
