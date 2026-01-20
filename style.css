@@ -1,108 +1,79 @@
+/* ---------------------- */
+/* ESTILO GERAL */
 body {
+  font-family: Arial, sans-serif;
+  background: #f0f2f5;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #0f172a, #020617);
-  color: white;
-  height: 100vh;
+}
+
+.container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.app {
-  background: #020617;
-  border-radius: 16px;
-  padding: 25px;
-  width: 320px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.card {
-  background: linear-gradient(135deg, #2563eb, #1e40af);
-  border-radius: 14px;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
   padding: 20px;
-  margin: 20px 0;
+}
+
+/* ---------------------- */
+/* CARTÕES */
+.app, .bolsa {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+  padding: 20px;
+  width: 45%;
+  min-width: 300px;
+  margin-bottom: 20px;
+}
+
+h3 {
+  margin-top: 15px;
+  color: #333;
 }
 
 .card p {
-  margin: 5px 0;
-}
-
-.saldo {
-  font-size: 26px;
-  font-weight: bold;
-}
-
-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 10px;
+  margin: 8px 0;
   font-size: 16px;
+}
+
+/* ---------------------- */
+/* BOTÕES */
+button {
+  margin: 5px 3px 5px 0;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
-}
-
-button.ganhar {
-  background: #22c55e;
-  color: #052e16;
-}
-
-button.gastar {
-  background: #ef4444;
-  color: #450a0a;
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
 }
 
 button:hover {
   opacity: 0.9;
-  }
-ul {
-  list-style: none;
-  padding: 0;
-  margin-top: 10px;
-  max-height: 150px;
+}
+
+/* ---------------------- */
+/* HISTÓRICO */
+#historico {
+  max-height: 200px;
   overflow-y: auto;
+  padding-left: 15px;
 }
 
-li {
-  background: #020617;
-  margin-bottom: 6px;
-  padding: 8px;
-  border-radius: 8px;
-  font-size: 14px;
-}
-button.transferir {
-  background: #f59e0b; /* laranja */
-  color: #3b1e00;
-    }
-button.trocar {
-  background: #8b5cf6; /* roxo */
-  color: #fff;
-}
-#listaJogadores button {
-  background: #8b5cf6;
-  color: #fff;
-  margin: 4px 2px;
-  padding: 8px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+/* ---------------------- */
+/* GANHO / PERDA */
+.ganho {
+  font-weight: bold;
 }
 
-#listaJogadores button:hover {
-  opacity: 0.9;
+/* ---------------------- */
+/* RESPONSIVO PARA CELULAR */
+@media (max-width: 768px) {
+  .app, .bolsa {
+    width: 90%;
   }
-button.comprar {
-  background: #10b981; /* verde */
-  color: #fff;
 }
-button.vender {
-  background: #ef4444; /* vermelho */
-  color: #fff;
-  }
+  
