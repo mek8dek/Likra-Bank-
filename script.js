@@ -3,19 +3,20 @@ let saldo = 100;
 let historico = [];
 
 // carregar jogador
-function carregarJogador() {
-  jogador = localStorage.getItem("jogadorLikra");
+function carregarJogador(nome) {
+  jogador = nome || localStorage.getItem("jogadorLikra");
   if (!jogador) {
     jogador = prompt("Digite seu nome:");
     if (!jogador) jogador = "Jogador";
     localStorage.setItem("jogadorLikra", jogador);
   }
 
+  // carregar saldo e histórico do jogador
   const saldoSalvo = localStorage.getItem("saldo_" + jogador);
-  if (saldoSalvo !== null) saldo = parseInt(saldoSalvo);
+  saldo = saldoSalvo ? parseInt(saldoSalvo) : 100;
 
   const historicoSalvo = localStorage.getItem("historico_" + jogador);
-  if (historicoSalvo !== null) historico = JSON.parse(historicoSalvo);
+  historico = historicoSalvo ? JSON.parse(historicoSalvo) : [];
 }
 
 // data/hora atual
@@ -39,8 +40,10 @@ function atualizarTudo() {
 
   localStorage.setItem("saldo_" + jogador, saldo);
   localStorage.setItem("historico_" + jogador, JSON.stringify(historico));
+  localStorage.setItem("jogadorLikra", jogador);
 }
 
+// funções básicas
 function ganhar() {
   saldo += 10;
   historico.unshift({ texto: "Ganhou 10 Likra K$", hora: agora() });
@@ -57,7 +60,7 @@ function gastar() {
   }
 }
 
-// nova função: transferir
+// transferir para outro jogador
 function transferir() {
   const destinatario = prompt("Digite o nome do jogador que vai receber:");
   if (!destinatario) return;
@@ -90,6 +93,14 @@ function transferir() {
   localStorage.setItem("saldo_" + destinatario, saldoDest + valor);
   localStorage.setItem("historico_" + destinatario, JSON.stringify(histDest));
 
+  atualizarTudo();
+}
+
+// trocar de conta
+function trocarConta() {
+  const novoNome = prompt("Digite o nome da conta que deseja acessar:");
+  if (!novoNome) return;
+  carregarJogador(novoNome);
   atualizarTudo();
 }
 
