@@ -1,120 +1,84 @@
-/* ================================
-   ESTILO GLOBAL
-================================= */
-body {
-  font-family: Arial, sans-serif;
-  background: #f0f2f5;
-  margin: 0;
-  padding: 0;
-}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Empréstimos Likra</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .card table {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
 
-.container {
-  max-width: 1000px;
-  margin: 20px auto;
-  padding: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
+<div class="container">
+  <h1>Empréstimos Likra</h1>
 
-/* ================================
-   CARDS
-================================= */
-.card {
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.2);
-  margin-bottom: 20px;
-  flex: 1 1 400px;
-}
+  <div class="card">
+    <h2>Lista de Empréstimos</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Jogador</th>
+          <th>Valor Original</th>
+          <th>Juros Diário</th>
+          <th>Taxa</th>
+          <th>Total Atual</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="listaEmprestimos"></tbody>
+    </table>
+  </div>
 
-/* ================================
-   TEXTOS
-================================= */
-h1, h2, h3 {
-  text-align: center;
-  color: #333;
-}
+  <div class="card">
+    <button onclick="window.location.href='index.html'">Voltar à Página Inicial</button>
+  </div>
+</div>
 
-p {
-  font-size: 16px;
-}
+<script>
+  // -----------------------------
+  // CARREGA EMPRÉSTIMOS
+  // -----------------------------
+  let todosEmprestimos = JSON.parse(localStorage.getItem("todosEmprestimos")) || [];
 
-/* ================================
-   TABELAS
-================================= */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-th, td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: center;
-}
-
-th {
-  background: #eee;
-}
-
-.ganho {
-  color: green;
-  font-weight: bold;
-}
-
-.perda {
-  color: red;
-  font-weight: bold;
-}
-
-/* ================================
-   BOTOES
-================================= */
-button {
-  padding: 8px 12px;
-  margin: 5px;
-  border: none;
-  border-radius: 8px;
-  background-color: #4CAF50;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-
-/* BOTÕES DIFERENCIADOS */
-button.emprestimo {
-  background-color: #FF9800; /* Laranja */
-}
-
-button.fundo {
-  background-color: #2196F3; /* Azul */
-}
-
-/* ================================
-   HISTÓRICO
-================================= */
-ul#historico {
-  max-height: 200px;
-  overflow-y: auto;
-  padding-left: 20px;
-}
-
-/* ================================
-   RESPONSIVO
-================================= */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
+  function calcularJuros(emprestimo){
+    const dataInicio = new Date(emprestimo.data);
+    const dataAgora = new Date();
+    const dias = Math.floor((dataAgora - dataInicio)/(1000*60*60*24));
+    return (emprestimo.valorOriginal * Math.pow(1 + emprestimo.juros, dias)).toFixed(2);
   }
 
-  .card {
-    flex: 1 1 100%;
+  function atualizarLista(){
+    const tbody = document.getElementById("listaEmprestimos");
+    tbody.innerHTML = "";
+
+    if(todosEmprestimos.length===0){
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td colspan="6">Nenhum empréstimo registrado</td>`;
+      tbody.appendChild(tr);
+      return;
+    }
+
+    todosEmprestimos.forEach(e => {
+      const total = calcularJuros(e);
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${e.jogador}</td>
+        <td>${e.valorOriginal.toLocaleString()} K$</td>
+        <td>${(e.juros*100).toFixed(2)}%</td>
+        <td>${(e.taxa*100).toFixed(2)}%</td>
+        <td>${total} K$</td>
+        <td>Ativo</td>
+      `;
+      tbody.appendChild(tr);
+    });
   }
-  }
+
+  atualizarLista();
+</script>
+
+</body>
+</html>
