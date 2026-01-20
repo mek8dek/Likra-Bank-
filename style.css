@@ -77,3 +77,7 @@ li {
   border-radius: 8px;
   font-size: 14px;
 }
+button.transferir {
+  background: #f59e0b; /* laranja */
+  color: #3b1e00;
+    }
