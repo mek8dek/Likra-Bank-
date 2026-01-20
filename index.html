@@ -6,56 +6,6 @@
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0d1117">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f2f5;
-      margin: 0;
-      padding: 0;
-    }
-
-    .container {
-      display: flex;
-      justify-content: space-around;
-      align-items: flex-start;
-      padding: 20px;
-    }
-
-    .app, .bolsa {
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      padding: 20px;
-      width: 45%;
-    }
-
-    h3 { margin-top: 10px; }
-
-    .card p { margin: 8px 0; }
-
-    button {
-      margin: 5px 3px 5px 0;
-      padding: 6px 12px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      background-color: #4CAF50;
-      color: white;
-      font-weight: bold;
-    }
-
-    button:hover { opacity: 0.9; }
-
-    #historico {
-      max-height: 200px;
-      overflow-y: auto;
-      padding-left: 15px;
-    }
-
-    .ganho {
-      font-weight: bold;
-    }
-  </style>
 </head>
 <body>
 
@@ -78,6 +28,13 @@
 
     <h3>Histórico</h3>
     <ul id="historico"></ul>
+
+    <!-- FUNDO DE EMPRÉSTIMO -->
+    <div class="card">
+      <h3>Fundo de Empréstimos</h3>
+      <p>Disponível: <strong id="fundoEmprestimo">74.000.000 Likra K$</strong></p>
+      <button onclick="pegarEmprestimo()">Pegar Empréstimo</button>
+    </div>
   </div>
 
   <!-- BOLSA -->
@@ -108,14 +65,11 @@
 
 <script src="script.js"></script>
 <script>
-  // Registrar service worker para PWA
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js").then(()=>{
       console.log("Service Worker registrado com sucesso!");
     });
   }
 </script>
-
 </body>
-</html>
-      
+                                                                            </html>
