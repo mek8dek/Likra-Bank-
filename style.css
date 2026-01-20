@@ -1,0 +1,64 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #020617);
+  color: white;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app {
+  background: #020617;
+  border-radius: 16px;
+  padding: 25px;
+  width: 320px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.card {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  border-radius: 14px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.card p {
+  margin: 5px 0;
+}
+
+.saldo {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button.ganhar {
+  background: #22c55e;
+  color: #052e16;
+}
+
+button.gastar {
+  background: #ef4444;
+  color: #450a0a;
+}
+
+button:hover {
+  opacity: 0.9;
+  }
