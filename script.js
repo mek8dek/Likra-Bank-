@@ -8,7 +8,7 @@ let saldoSAD = 0;
 let saldoDAF = 0;
 let historico = [];
 
-// preços médios de compra para cálculo de ganho/perda
+// preços médios de compra
 let precoMedioLikra = 0;
 let precoMedioSAD = 0;
 let precoMedioDAF = 0;
@@ -16,7 +16,9 @@ let precoMedioDAF = 0;
 // fundo de empréstimo
 let fundoEmprestimo = 74000000;
 
-// lista de jogadores
+// -----------------------
+// FUNÇÕES DE BANCO
+// -----------------------
 function carregarJogador(nome) {
   jogador = nome || localStorage.getItem("jogadorLikra");
   if (!jogador) {
@@ -46,7 +48,6 @@ function carregarJogador(nome) {
 // data/hora atual
 function agora() { return new Date().toLocaleString(); }
 
-// atualizar tudo
 function atualizarTudo() {
   document.getElementById("saldo").innerText = saldoLikra.toFixed(2) + " Likra K$";
   document.getElementById("nomeJogador").innerText = jogador;
@@ -106,7 +107,7 @@ function atualizarListaJogadores() {
 }
 
 // -----------------------
-// BOLSA DE MOEDAS COM GANHO/PERDA
+// BOLSA DE MOEDAS
 // -----------------------
 let valorLikraBolsa=3.44;
 let valorSAD=2.34;
@@ -155,7 +156,6 @@ function atualizarBolsaTotais(){
   document.getElementById("lucroDAF").style.color=r.lucro>=0?'green':'red';
 }
 
-// comprar moeda
 function comprarMoeda(tipo){
   const valor=parseFloat(prompt(`Quanto em R$ deseja gastar para comprar ${tipo}?`));
   if(isNaN(valor)||valor<=0){alert("Valor inválido"); return;}
@@ -171,7 +171,6 @@ function comprarMoeda(tipo){
   atualizarTudo();
 }
 
-// vender moeda
 function venderMoeda(tipo){
   const qtd=parseFloat(prompt(`Quantas ${tipo} deseja vender?`));
   if(isNaN(qtd)||qtd<=0){alert("Quantidade inválida"); return;}
