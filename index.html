@@ -14,22 +14,26 @@
   <div class="app">
     <p>Bem-vindo, <strong id="nomeJogador"></strong>!</p>
 
+    <!-- Saldo do jogador -->
     <div class="card">
       <p>Saldo Likra</p>
       <p class="saldo" id="saldo">100 Likra K$</p>
     </div>
 
+    <!-- Botões do banco -->
     <button onclick="ganhar()">Ganhar 10 Likra K$</button>
     <button onclick="gastar()">Gastar 5 Likra K$</button>
     <button onclick="transferir()">Transferir Likra</button>
 
+    <!-- Trocar de conta -->
     <h3>Trocar de Conta</h3>
     <div id="listaJogadores"></div>
 
+    <!-- Histórico -->
     <h3>Histórico</h3>
     <ul id="historico"></ul>
 
-    <!-- FUNDO DE EMPRÉSTIMO -->
+    <!-- FUNDO DE EMPRÉSTIMOS -->
     <div class="card">
       <h3>Fundo de Empréstimos</h3>
       <p>Disponível: <strong id="fundoEmprestimo">74.000.000 Likra K$</strong></p>
@@ -63,7 +67,7 @@
   </div>
 </div>
 
-<script src="script.js"></script>
+<script src="script.js?version=2"></script> <!-- ?version=2 garante que o navegador carregue a versão nova -->
 <script>
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js").then(()=>{
@@ -72,4 +76,4 @@
   }
 </script>
 </body>
-                                                                            </html>
+                                                                                                        </html>
