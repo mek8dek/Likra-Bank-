@@ -6,11 +6,29 @@
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0d1117">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f2f5; margin: 0; padding: 0; }
+    .container { max-width: 1000px; margin: 20px auto; padding: 10px; display: flex; flex-wrap: wrap; gap: 20px; }
+    .app, .bolsa { flex: 1 1 400px; }
+    h1,h2,h3 { text-align: center; color: #333; }
+    .card { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 3px 12px rgba(0,0,0,0.2); margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background: #eee; }
+    .ganho { color: green; font-weight: bold; }
+    .perda { color: red; font-weight: bold; }
+    button { padding: 8px 12px; margin: 5px; border: none; border-radius: 8px; background-color: #4CAF50; color: white; cursor: pointer; }
+    button:hover { opacity: 0.9; }
+    button.emprestimo { background-color: #FF9800; }
+    button.fundo { background-color: #2196F3; }
+  </style>
 </head>
 <body>
 
 <div class="container">
-  <!-- BANCO -->
+
+  <!-- BANCO / APP -->
   <div class="app">
     <p>Bem-vindo, <strong id="nomeJogador"></strong>!</p>
 
@@ -30,16 +48,16 @@
     <ul id="historico"></ul>
 
     <!-- FUNDO DE EMPRÉSTIMOS -->
-<div class="card">
-  <h3>Fundo de Empréstimos</h3>
-  <p id="fundoEmprestimo">74.000.000 Likra K$</p>
-  <button onclick="pegarEmprestimo()">Pegar Empréstimo</button>
-  <button onclick="pagarEmprestimo()">Pagar Empréstimo</button>
-  
-  <!-- Botão para acessar a página de empréstimos -->
-  <button onclick="window.location.href='emprestimos.html'">Área Empréstimos</button>
-</div>
-    
+    <div class="card">
+      <h3>Fundo de Empréstimos</h3>
+      <p id="fundoEmprestimo">74.000.000 Likra K$</p>
+      <button onclick="pegarEmprestimo()">Pegar Empréstimo</button>
+      <button onclick="pagarEmprestimo()">Pagar Empréstimo</button>
+      <button class="emprestimo" onclick="window.location.href='emprestimos.html'">Área Empréstimos</button>
+      <button class="fundo" onclick="window.location.href='fundoSoberano.html'">Fundo Soberano</button>
+    </div>
+  </div>
+
   <!-- BOLSA -->
   <div class="card bolsa">
     <h3>Bolsa de Moedas</h3>
@@ -64,9 +82,10 @@
     <button onclick="comprarMoeda('DAF')">Comprar DAF¥</button>
     <button onclick="venderMoeda('DAF')">Vender DAF¥</button>
   </div>
+
 </div>
 
-<script src="script.js?ver=10"></script>
+<script src="script.js?ver=30"></script>
 <script>
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js").then(()=>{
