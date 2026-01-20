@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fundo de Empréstimos - Likra</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f2f5; margin: 0; padding: 0; }
+    .container { max-width: 900px; margin: 20px auto; padding: 10px; }
+    h1,h2,h3 { text-align: center; color: #333; }
+    .card { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 3px 12px rgba(0,0,0,0.2); margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background: #eee; }
+    .ganho { color: green; font-weight: bold; }
+    .perda { color: red; font-weight: bold; }
+    button { padding: 8px 12px; margin: 5px; border: none; border-radius: 8px; background-color: #4CAF50; color: white; cursor: pointer; }
+    button:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Fundo de Empréstimos Likra</h1>
+
+  <div class="card">
+    <h2>Saldo do Fundo</h2>
+    <p id="saldoFundo">75.000.000 Likra K$</p>
+  </div>
+
+  <div class="card">
+    <h2>Empréstimos Ativos</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Jogador</th>
+          <th>Valor Original</th>
+          <th>Juros Diários</th>
+          <th>Total com Juros</th>
+          <th>Taxa Aplicada</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="listaEmprestimos"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  // -----------------------------
+  // DADOS INICIAIS
+  // -----------------------------
+  let fundoLikra = parseFloat(localStorage.getItem("fundoLikra")) || 75000000;
+  document.getElementById("saldoFundo").innerText = fundoLikra.toLocaleString() + " Likra K$";
+
+  // Objeto que armazena todos os empréstimos ativos
+  // formato: [{ jogador: "Nome", valorOriginal: 1000, data: "2026-01-20T12:00:00", juros: 0.02, taxa: 0.025 }]
+  let emprestimos = JSON.parse(localStorage.getItem("todosEmprestimos")) || [];
+
+  // -----------------------------
+  // FUNÇÕES
+  // -----------------------------
+  function calcularJuros(emprestimo) {
+    const dataInicio = new Date(emprestimo.data);
+    const dataAgora = new Date();
+    const dias = Math.floor((dataAgora - dataInicio)/(1000*60*60*24));
+    const total = emprestimo.valorOriginal * Math.pow(1 + emprestimo.juros, dias);
+    return total.toFixed(2);
+  }
+
+  function atualizarLista() {
+    const tbody = document.getElementById("listaEmprestimos");
+    tbody.innerHTML = "";
+
+    emprestimos.forEach((e,i)=>{
+      const total = calcularJuros(e);
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${e.jogador}</td>
+        <td>${e.valorOriginal.toLocaleString()}</td>
+        <td>${(e.juros*100).toFixed(2)}%</td>
+        <td>${total}</td>
+        <td>${(e.taxa*100).toFixed(2)}%</td>
+        <td><button onclick="receberPagamento(${i})">Receber Pagamento</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function receberPagamento(index) {
+    const emprestimo = emprestimos[index];
+    const total = parseFloat(calcularJuros(emprestimo));
+    const pagamento = parseFloat(prompt(`Total a pagar de ${emprestimo.jogador}: ${total} Likra K$\nQuanto receber?`));
+    if(isNaN(pagamento) || pagamento<=0) { alert("Pagamento inválido"); return; }
+    if(pagamento > total) { alert("Não pode receber mais que o total"); return; }
+
+    // Atualiza o fundo com juros + taxa
+    fundoLikra += pagamento;
+    localStorage.setItem("fundoLikra", fundoLikra);
+
+    // Atualiza o empréstimo
+    const restante = total - pagamento;
+    if(restante <= 0) {
+      emprestimos.splice(index,1);
+    } else {
+      const dataHoje = new Date().toISOString();
+      emprestimos[index] = { ...emprestimo, valorOriginal: restante, data: dataHoje };
+    }
+    localStorage.setItem("todosEmprestimos", JSON.stringify(emprestimos));
+    atualizarLista();
+    document.getElementById("saldoFundo").innerText = fundoLikra.toLocaleString() + " Likra K$";
+  }
+
+  // -----------------------------
+  // INICIALIZAÇÃO
+  // -----------------------------
+  atualizarLista();
+</script>
+
+</body>
+          </html>
