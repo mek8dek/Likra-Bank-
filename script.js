@@ -13,6 +13,9 @@ let precoMedioLikra = 0;
 let precoMedioSAD = 0;
 let precoMedioDAF = 0;
 
+// fundo de empréstimo
+let fundoEmprestimo = 74000000;
+
 // lista de jogadores
 function carregarJogador(nome) {
   jogador = nome || localStorage.getItem("jogadorLikra");
@@ -36,6 +39,8 @@ function carregarJogador(nome) {
   precoMedioLikra = parseFloat(localStorage.getItem("precoLikra_" + jogador)) || 0;
   precoMedioSAD = parseFloat(localStorage.getItem("precoSAD_" + jogador)) || 0;
   precoMedioDAF = parseFloat(localStorage.getItem("precoDAF_" + jogador)) || 0;
+
+  document.getElementById("fundoEmprestimo").innerText = fundoEmprestimo.toLocaleString() + " Likra K$";
 }
 
 // data/hora atual
@@ -183,6 +188,29 @@ function venderMoeda(tipo){
   else if(tipo==="DAF"){saldoDAF-=qtd;}
   saldoReais+=valorLiquido;
   alert(`Vendeu ${qtd.toFixed(2)} ${tipo} por R$ ${valorLiquido.toFixed(2)} (taxa R$ ${taxaOper.toFixed(2)})`);
+  atualizarTudo();
+}
+
+// -----------------------
+// FUNDO DE EMPRÉSTIMO
+// -----------------------
+function pegarEmprestimo() {
+  const valor = parseFloat(prompt("Quanto deseja pegar de empréstimo em Likra K$?"));
+  if (isNaN(valor) || valor <= 0) {
+    alert("Valor inválido!");
+    return;
+  }
+  if (valor > fundoEmprestimo) {
+    alert("O fundo não tem esse valor disponível!");
+    return;
+  }
+
+  saldoLikra += valor;
+  fundoEmprestimo -= valor;
+
+  document.getElementById("fundoEmprestimo").innerText = fundoEmprestimo.toLocaleString() + " Likra K$";
+
+  historico.unshift({ texto: `Pegou empréstimo de ${valor.toLocaleString()} Likra K$`, hora: agora() });
   atualizarTudo();
 }
 
