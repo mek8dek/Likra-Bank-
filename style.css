@@ -1,5 +1,6 @@
-/* ---------------------- */
-/* ESTILO GERAL */
+/* ================================
+   ESTILO GLOBAL
+================================= */
 body {
   font-family: Arial, sans-serif;
   background: #f0f2f5;
@@ -8,72 +9,112 @@ body {
 }
 
 .container {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 10px;
   display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
   flex-wrap: wrap;
-  padding: 20px;
+  gap: 20px;
 }
 
-/* ---------------------- */
-/* CARTÕES */
-.app, .bolsa {
+/* ================================
+   CARDS
+================================= */
+.card {
   background: #fff;
+  padding: 20px;
   border-radius: 12px;
   box-shadow: 0 3px 12px rgba(0,0,0,0.2);
-  padding: 20px;
-  width: 45%;
-  min-width: 300px;
   margin-bottom: 20px;
+  flex: 1 1 400px;
 }
 
-h3 {
-  margin-top: 15px;
+/* ================================
+   TEXTOS
+================================= */
+h1, h2, h3 {
+  text-align: center;
   color: #333;
 }
 
-.card p {
-  margin: 8px 0;
+p {
   font-size: 16px;
 }
 
-/* ---------------------- */
-/* BOTÕES */
+/* ================================
+   TABELAS
+================================= */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background: #eee;
+}
+
+.ganho {
+  color: green;
+  font-weight: bold;
+}
+
+.perda {
+  color: red;
+  font-weight: bold;
+}
+
+/* ================================
+   BOTOES
+================================= */
 button {
-  margin: 5px 3px 5px 0;
-  padding: 8px 14px;
+  padding: 8px 12px;
+  margin: 5px;
   border: none;
   border-radius: 8px;
-  cursor: pointer;
   background-color: #4CAF50;
   color: white;
+  cursor: pointer;
   font-weight: bold;
-  transition: 0.3s;
 }
 
 button:hover {
   opacity: 0.9;
 }
 
-/* ---------------------- */
-/* HISTÓRICO */
-#historico {
+/* BOTÕES DIFERENCIADOS */
+button.emprestimo {
+  background-color: #FF9800; /* Laranja */
+}
+
+button.fundo {
+  background-color: #2196F3; /* Azul */
+}
+
+/* ================================
+   HISTÓRICO
+================================= */
+ul#historico {
   max-height: 200px;
   overflow-y: auto;
-  padding-left: 15px;
+  padding-left: 20px;
 }
 
-/* ---------------------- */
-/* GANHO / PERDA */
-.ganho {
-  font-weight: bold;
-}
-
-/* ---------------------- */
-/* RESPONSIVO PARA CELULAR */
+/* ================================
+   RESPONSIVO
+================================= */
 @media (max-width: 768px) {
-  .app, .bolsa {
-    width: 90%;
+  .container {
+    flex-direction: column;
   }
-}
-  
+
+  .card {
+    flex: 1 1 100%;
+  }
+  }
